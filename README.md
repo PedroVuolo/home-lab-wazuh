@@ -47,6 +47,8 @@ As duas máquinas têm dois adaptadores de rede: NAT (acesso à internet) e host
 
 ### 1. Múltiplas falhas de login por SSH
 
+![Alertas de login falho](06-logins-falhos.png)
+
 **O que aconteceu.** Em 12/11/2026, por volta das 18:50, simulei tentativas de login por SSH com senha errada na máquina `agente-linux`, seguidas de um login com a senha correta.
 
 **Por que o Wazuh alertou.** Cada falha gerou alertas de nível 5 (regras 5503, PAM: User login failed, e 5760, sshd: authentication failed). Depois de várias falhas seguidas, a regra 2502 (syslog: User missed the password more than one time) disparou com **nível 10**, porque o padrão repetido indica possível tentativa de adivinhar a senha. O login correto gerou as regras 5715 (sshd: authentication success) e 5501 (PAM: Login session opened), de nível 3.
